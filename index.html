@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glavina — Namještaj po mjeri</title>
     <link rel="icon" href="https://i.imgur.com/JwVmh8x.png">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0f1115;
@@ -17,10 +15,10 @@
             --muted: #9aa3b2;
             --accent: #d81c1c;
             --accent2: #ff4b4b;
-            --ring: rgba(216, 28, 28, 0.35);
             --radius: 22px;
             --maxw: 1200px;
             --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+            --ring: rgba(216, 28, 28, 0.35);
         }
 
         [data-theme="light"] {
@@ -48,9 +46,9 @@
         header {
             position: sticky;
             top: 0;
-            z-index: 50;
-            background: linear-gradient(180deg, rgba(10, 12, 18, .85)0%, rgba(10, 12, 18, .55)100%);
-            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            z-index: 100;
+            background: var(--bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
         }
 
         .nav {
@@ -89,6 +87,7 @@
             text-decoration: none;
             color: var(--muted);
             font-weight: 500;
+            transition: 0.3s;
         }
 
         nav ul li a:hover {
@@ -96,13 +95,28 @@
         }
 
         .theme-toggle {
-            display: none;
             cursor: pointer;
             padding: 6px 10px;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, .2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             background: none;
             color: var(--text);
+            display: inline-flex;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 12px 28px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent2);
         }
 
         .hero {
@@ -112,11 +126,12 @@
             max-width: var(--maxw);
             margin: 0 auto;
             gap: 40px;
+            align-items: center;
         }
 
         .hero img {
             width: 100%;
-            border-radius: 22px;
+            border-radius: var(--radius);
             box-shadow: var(--shadow);
         }
 
@@ -151,9 +166,8 @@
         }
 
         .icon {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 12px;
-            display: inline-block;
         }
 
         .gallery {
@@ -165,15 +179,16 @@
         .g-item {
             overflow: hidden;
             border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: var(--shadow);
+            transition: transform 0.3s;
         }
 
         .g-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.6s;
+            transition: 0.5s;
         }
 
         .g-item:hover img {
@@ -289,31 +304,46 @@
             transform: translateY(0);
         }
 
-        @media(max-width:1000px) {
-            .hero {
-                grid-template-columns: 1fr;
-            }
+        /* Hamburger meni */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
 
-            .timeline {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .usp {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .testimonials {
-                grid-template-columns: 1fr 1fr;
-            }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: 0.3s;
         }
 
         @media(max-width:720px) {
             nav ul {
                 display: none;
+                flex-direction: column;
+                background: var(--bg);
+                position: absolute;
+                top: 70px;
+                right: 0;
+                width: 200px;
+                padding: 20px;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
             }
 
             .theme-toggle {
-                display: inline-flex;
+                margin-left: 10px;
             }
 
             .grid-3 {
@@ -333,11 +363,15 @@
 
 <body data-theme="dark">
 
-    <!-- Header -->
     <header>
         <nav class="nav">
-            <a href="#" class="brand"><img src="https://i.imgur.com/JwVmh8x.png" alt="Glavina logo">Glavina</a>
-            <ul>
+            <a href="#" class="brand"><img src="https://i.imgur.com/JwVmh8x.png">Glavina</a>
+            <div class="hamburger" id="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <ul id="menu">
                 <li><a href="#onama">O nama</a></li>
                 <li><a href="#services">Ponuda</a></li>
                 <li><a href="#gallery">Galerija</a></li>
@@ -355,7 +389,7 @@
         <div>
             <h1>Namještaj po mjeri za svaki dom</h1>
             <p>Glavina izrađuje kuhinje, ormari i druge komade namještaja prema vašim željama i prostoru.</p>
-            <a href="#contact" class="btn btn-primary">Zatraži ponudu</a>
+            <a href="#contact" class="btn-primary">Zatraži ponudu</a>
         </div>
         <div><img src="https://i.imgur.com/wQf6MPl.jpg" alt="Namještaj po mjeri"></div>
     </section>
@@ -371,15 +405,15 @@
             <h3>Kontakt informacije</h3>
             <p><strong>Glavina d.o.o.</strong></p>
             <p>Adresa: Knešpolje bb, 88220 Široki Brijeg</p>
-            <p>tel/fax: +387 39 701 150</p>
-            <p>e-mail: <a href="mailto:info@glavina.info">info@glavina.info</a></p>
-            <p>proizvodnja: <a href="mailto:proizvodnja@glavina.info">proizvodnja@glavina.info</a></p>
-            <p>narudžbe: <a href="mailto:narudzbe@glavina.info">narudzbe@glavina.info</a></p>
-            <p>web: <a href="https://www.glavina.info" target="_blank">www.glavina.info</a></p>
+            <p>Tel/fax: +387 39 701 150</p>
+            <p>E-mail: <a href="mailto:info@glavina.info">info@glavina.info</a></p>
+            <p>Proizvodnja: <a href="mailto:proizvodnja@glavina.info">proizvodnja@glavina.info</a></p>
+            <p>Narudžbe: <a href="mailto:narudzbe@glavina.info">narudzbe@glavina.info</a></p>
+            <p>Web: <a href="https://www.glavina.info" target="_blank">www.glavina.info</a></p>
         </div>
     </section>
 
-    <!-- Ponuda / Services -->
+    <!-- Ponuda -->
     <section id="services" class="reveal">
         <h2 class="section-title">Naša ponuda</h2>
         <p class="section-sub">Sve što možete zamisliti u svom domu, mi možemo izraditi.</p>
@@ -490,7 +524,7 @@
         <div>
             <h2 class="section-title">Spremni za svoj namještaj po mjeri?</h2>
             <p>Kontaktirajte nas i zajedno kreirajmo vaš savršeni prostor.</p>
-            <a href="#contact" class="btn btn-primary">Pošaljite upit</a>
+            <a href="#contact" class="btn-primary">Pošaljite upit</a>
         </div>
         <div class="card">
             <h3>Kontaktirajte nas odmah</h3>
@@ -504,11 +538,11 @@
         <div>
             <h2 class="section-title">Kontakt</h2>
             <p class="section-sub">Pošaljite nam poruku i odgovorit ćemo vam u najkraćem roku.</p>
-            <form>
+            <form onsubmit="alert('Poruka je poslana!'); return false;">
                 <input class="input" type="text" placeholder="Ime i prezime" required>
                 <input class="input" type="email" placeholder="Email" required>
                 <textarea class="input" placeholder="Poruka" required></textarea>
-                <button type="submit" class="btn btn-primary">Pošalji</button>
+                <button type="submit" class="btn-primary">Pošalji</button>
             </form>
         </div>
         <div>
@@ -526,34 +560,30 @@
     <script>
         // Reveal on scroll
         const reveals = document.querySelectorAll(".reveal");
-        function reveal() {
-            for (let i = 0; i < reveals.length; i++) {
-                const windowHeight = window.innerHeight;
-                const elementTop = reveals[i].getBoundingClientRect().top;
-                const elementVisible = 100;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("visible");
-                } else {
-                    reveals[i].classList.remove("visible");
-                }
-            }
-        }
-        window.addEventListener("scroll", reveal);
-        reveal();
+        window.addEventListener("scroll", () => {
+            reveals.forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < window.innerHeight - 100) el.classList.add("visible");
+                else el.classList.remove("visible");
+            });
+        });
 
-        // Light/Dark mode toggle
+        // Dark/Light toggle
         const themeToggle = document.getElementById("themeToggle");
         themeToggle.addEventListener("click", () => {
             const body = document.body;
-            if (body.getAttribute("data-theme") === "dark") {
-                body.setAttribute("data-theme", "light");
-                themeToggle.textContent = "🌞";
-            } else {
-                body.setAttribute("data-theme", "dark");
-                themeToggle.textContent = "🌙";
-            }
+            if (body.dataset.theme === "dark") { body.dataset.theme = "light"; themeToggle.textContent = "🌞"; }
+            else { body.dataset.theme = "dark"; themeToggle.textContent = "🌙"; }
+        });
+
+        // Hamburger toggle
+        const hamburger = document.getElementById("hamburger");
+        const menu = document.getElementById("menu");
+        hamburger.addEventListener("click", () => {
+            menu.classList.toggle("show");
         });
     </script>
+
 </body>
 
 </html>
