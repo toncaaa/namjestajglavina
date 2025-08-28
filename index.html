@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glavina — Namještaj po mjeri</title>
+    <meta name="description"
+        content="Glavina izrađuje kuhinje, ormari i druge komade namještaja po mjeri. Pogledajte našu ponudu i galeriju. Kontaktirajte nas odmah.">
     <link rel="icon" href="https://i.imgur.com/JwVmh8x.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -33,7 +35,6 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            scroll-behavior: smooth;
         }
 
         body {
@@ -99,7 +100,7 @@
             cursor: pointer;
             padding: 6px 10px;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, .2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             background: none;
             color: var(--text);
             display: inline-flex;
@@ -120,16 +121,12 @@
             background: var(--accent2);
         }
 
-        section {
-            max-width: var(--maxw);
-            margin: 0 auto;
-            padding: 70px 20px;
-            scroll-margin-top: 100px;
-        }
-
         .hero {
+            padding: 100px 20px 70px;
             display: grid;
             grid-template-columns: 1.1fr .9fr;
+            max-width: var(--maxw);
+            margin: 0 auto;
             gap: 40px;
             align-items: center;
         }
@@ -138,6 +135,12 @@
             width: 100%;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
+        }
+
+        section {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            padding: 70px 20px;
         }
 
         .section-title {
@@ -171,7 +174,7 @@
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(12, 1fr);
             gap: 12px;
         }
 
@@ -181,7 +184,6 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: var(--shadow);
             transition: transform .3s;
-            cursor: pointer;
         }
 
         .g-item img {
@@ -189,98 +191,102 @@
             height: 100%;
             object-fit: cover;
             transition: .5s;
+            cursor: pointer;
         }
 
         .g-item:hover img {
             transform: scale(1.06);
         }
 
-        .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, .9);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
+        .span-6 {
+            grid-column: span 6;
+            aspect-ratio: 16/10;
         }
 
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90%;
+        .span-3 {
+            grid-column: span 3;
+            aspect-ratio: 1;
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .step {
+            position: relative;
+            padding: 18px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, .08);
+            background: var(--card);
+            box-shadow: var(--shadow);
+        }
+
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            top: -14px;
+            left: -14px;
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
             border-radius: 12px;
-        }
-
-        .lightbox.active {
-            display: flex;
-        }
-
-        .lightbox .close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
+            background: var(--accent);
             color: #fff;
-            font-size: 32px;
-            cursor: pointer;
+            font-weight: 800;
         }
 
-        .lightbox .prev,
-        .lightbox .next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #fff;
-            font-size: 48px;
-            cursor: pointer;
-            user-select: none;
+        .usp {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
         }
 
-        .lightbox .prev {
-            left: 20px;
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
         }
 
-        .lightbox .next {
-            right: 20px;
+        .quote {
+            font-style: italic;
+            color: var(--muted);
+        }
+
+        .cta {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 24px;
+            align-items: center;
         }
 
         .contact {
             display: grid;
-            grid-template-columns: 1.2fr .8fr;
+            grid-template-columns: 1fr 1fr;
             gap: 24px;
-            align-items: start;
         }
 
-        .contact .card {
-            padding: 30px;
-        }
-
-        .contact h3 {
-            margin-bottom: 12px;
-            color: var(--accent);
+        form {
+            display: grid;
+            gap: 12px;
         }
 
         .input {
             width: 100%;
-            padding: 16px 18px;
+            padding: 14px 16px;
             border-radius: 14px;
             background: #0d1016;
             color: var(--text);
             border: 1px solid rgba(255, 255, 255, .1);
-            transition: .3s;
         }
 
         .input:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 4px var(--ring);
-        }
-
-        textarea.input {
-            resize: none;
-            min-height: 140px;
         }
 
         footer {
@@ -338,13 +344,71 @@
                 display: flex;
             }
 
+            .theme-toggle {
+                margin-left: 10px;
+            }
+
             .grid-3 {
                 grid-template-columns: 1fr;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(6, 1fr);
             }
 
             .contact {
                 grid-template-columns: 1fr;
             }
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .9);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 12px;
+        }
+
+        .lightbox .close,
+        .lightbox .prev,
+        .lightbox .next {
+            position: absolute;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .lightbox .close {
+            top: 20px;
+            right: 30px;
+        }
+
+        .lightbox .prev {
+            top: 50%;
+            left: 30px;
+            transform: translateY(-50%);
+        }
+
+        .lightbox .next {
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
         }
     </style>
 </head>
@@ -385,11 +449,16 @@
     <!-- O nama -->
     <section id="onama" class="reveal">
         <h2 class="section-title">O nama</h2>
-        <p class="section-sub">Početak poduzeća datira od 20. rujna 1993. godine.</p>
         <div class="card">
+            <p>Početak poduzeća datira od <strong>20. rujna 1993. godine</strong>.</p>
             <p>Osnovna djelatnost poduzeća je maloprodaja i veleprodaja namještaja, te u novije vrijeme proizvodnja
                 istog.</p>
             <p>Poduzeće posluje sa sjedištem u Knešpolju bb, Široki Brijeg.</p>
+            <h3>Kontakt informacije</h3>
+            <p><strong>Glavina d.o.o.</strong></p>
+            <p>Adresa: Knešpolje bb, 88220 Široki Brijeg</p>
+            <p>Tel/fax: +387 39 701 150</p>
+            <p>E-mail: <a href="mailto:info@glavina.info">info@glavina.info</a></p>
         </div>
     </section>
 
@@ -421,20 +490,20 @@
         <h2 class="section-title">Galerija</h2>
         <p class="section-sub">Pogledajte neke od naših realizacija.</p>
         <div class="gallery">
-            <div class="g-item reveal"><img src="https://imgur.com/6bHadVi.jpg" alt=""></div>
-            <div class="g-item reveal"><img src="https://imgur.com/j0VXOv8.jpg" alt=""></div>
-            <div class="g-item reveal"><img src="https://imgur.com/4FufoWD.jpg" alt=""></div>
-            <div class="g-item reveal"><img src="https://imgur.com/kEzqTbK.jpg" alt=""></div>
-            <div class="g-item reveal"><img src="https://imgur.com/py04aNp.jpg" alt=""></div>
-            <div class="g-item reveal"><img src="https://imgur.com/lpeUiSf.jpg" alt=""></div>
-            <div class="g-item reveal"><img src="https://imgur.com/po9HGo7.jpg" alt=""></div>
-            <div class="g-item reveal"><img src="https://imgur.com/VpUPwye.jpg" alt=""></div>
-            <div class="g-item reveal"><img src="https://imgur.com/1nRPv79.jpg" alt=""></div>
-            <div class="g-item reveal"><img src="https://imgur.com/2ABkAMM.jpg" alt=""></div>
-            <div class="g-item reveal"><img src="https://imgur.com/amvpQsX.jpg" alt=""></div>
-            <div class="g-item reveal"><img src="https://imgur.com/WW0ZpuB.jpg" alt=""></div>
-            <div class="g-item reveal"><img src="https://imgur.com/wyTZ6yE.jpg" alt=""></div>
-            <div class="g-item reveal"><img src="https://imgur.com/JAfhQfb.jpg" alt=""></div>
+            <div class="g-item span-6 reveal"><img src="https://i.imgur.com/6bHadVi.jpg" alt="Galerija 1"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/j0VXOv8.jpg" alt="Galerija 2"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/4FufoWD.jpg" alt="Galerija 3"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/kEzqTbK.jpg" alt="Galerija 4"></div>
+            <div class="g-item span-6 reveal"><img src="https://i.imgur.com/py04aNp.jpg" alt="Galerija 5"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/lpeUiSf.jpg" alt="Galerija 6"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/po9HGo7.jpg" alt="Galerija 7"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/VpUPwye.jpg" alt="Galerija 8"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/1nRPv79.jpg" alt="Galerija 9"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/2ABkAMM.jpg" alt="Galerija 10"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/amvpQsX.jpg" alt="Galerija 11"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/WW0ZpuB.jpg" alt="Galerija 12"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/wyTZ6yE.jpg" alt="Galerija 13"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/JAfhQfb.jpg" alt="Galerija 14"></div>
         </div>
     </section>
 
@@ -544,45 +613,35 @@
         // Reveal on scroll
         const reveals = document.querySelectorAll(".reveal");
         window.addEventListener("scroll", () => {
-            reveals.forEach(el => {
-                const top = el.getBoundingClientRect().top;
-                if (top < window.innerHeight - 100) el.classList.add("visible");
-                else el.classList.remove("visible");
-            });
+            reveals.forEach(el => { const top = el.getBoundingClientRect().top; if (top < window.innerHeight - 100) el.classList.add("visible"); else el.classList.remove("visible"); });
         });
-
+        // Smooth scroll
+        document.querySelectorAll('nav ul li a').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' }); menu.classList.remove('show'); }); });
         // Dark/Light toggle
         const themeToggle = document.getElementById("themeToggle");
-        themeToggle.addEventListener("click", () => {
-            const body = document.body;
-            if (body.dataset.theme === "dark") { body.dataset.theme = "light"; themeToggle.textContent = "🌞"; }
-            else { body.dataset.theme = "dark"; themeToggle.textContent = "🌙"; }
-        });
-
+        themeToggle.addEventListener("click", () => { const body = document.body; if (body.dataset.theme === "dark") { body.dataset.theme = "light"; themeToggle.textContent = "🌞"; } else { body.dataset.theme = "dark"; themeToggle.textContent = "🌙"; } });
         // Hamburger toggle
         const hamburger = document.getElementById("hamburger");
         const menu = document.getElementById("menu");
         hamburger.addEventListener("click", () => { menu.classList.toggle("show"); });
-
-        // Lightbox
-        const galleryItems = document.querySelectorAll(".g-item img");
+        // Lightbox gallery
         const lightbox = document.getElementById("lightbox");
-        const lightboxImg = lightbox.querySelector("img");
-        const closeBtn = lightbox.querySelector(".close");
-        const prevBtn = lightbox.querySelector(".prev");
-        const nextBtn = lightbox.querySelector(".next");
+        const lbImg = lightbox.querySelector('img');
+        const lbClose = lightbox.querySelector('.close');
+        const lbPrev = lightbox.querySelector('.prev');
+        const lbNext = lightbox.querySelector('.next');
+        const galleryImgs = document.querySelectorAll('.g-item img');
         let currentIndex = 0;
-        galleryItems.forEach((img, index) => {
-            img.addEventListener("click", () => {
-                currentIndex = index; lightbox.classList.add("active"); lightboxImg.src = img.src;
-            });
-        });
-        closeBtn.addEventListener("click", () => { lightbox.classList.remove("active"); });
-        prevBtn.addEventListener("click", () => { currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length; lightboxImg.src = galleryItems[currentIndex].src; });
-        nextBtn.addEventListener("click", () => { currentIndex = (currentIndex + 1) % galleryItems.length; lightboxImg.src = galleryItems[currentIndex].src; });
-        window.addEventListener("click", (e) => { if (e.target === lightbox) lightbox.classList.remove("active"); });
+        galleryImgs.forEach((img, i) => { img.addEventListener('click', () => { currentIndex = i; openLightbox(); }); });
+        function openLightbox() { lbImg.src = galleryImgs[currentIndex].src; lightbox.classList.add('active'); }
+        function closeLightbox() { lightbox.classList.remove('active'); }
+        function nextImage() { currentIndex = (currentIndex + 1) % galleryImgs.length; lbImg.src = galleryImgs[currentIndex].src; }
+        function prevImage() { currentIndex = (currentIndex - 1 + galleryImgs.length) % galleryImgs.length; lbImg.src = galleryImgs[currentIndex].src; }
+        lbClose.addEventListener('click', closeLightbox);
+        lbNext.addEventListener('click', nextImage);
+        lbPrev.addEventListener('click', prevImage);
+        lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
     </script>
-
 </body>
 
 </html>
