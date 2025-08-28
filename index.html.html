@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glavina — Namještaj po mjeri</title>
+    <link rel="icon" href="https://i.imgur.com/JwVmh8x.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f1115;
+            --card: #151923;
+            --text: #e6e9ef;
+            --muted: #9aa3b2;
+            --accent: #d81c1c;
+            --accent2: #ff4b4b;
+            --ring: rgba(216, 28, 28, 0.35);
+            --radius: 22px;
+            --maxw: 1200px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+        }
+
+        [data-theme="light"] {
+            --bg: #fdfdfd;
+            --card: #ffffff;
+            --text: #111;
+            --muted: #555;
+            --ring: rgba(216, 28, 28, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: 0.3s;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: linear-gradient(180deg, rgba(10, 12, 18, .85)0%, rgba(10, 12, 18, .55)100%);
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .nav {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 28px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .brand img {
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+
+        .theme-toggle {
+            display: none;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, .2);
+            background: none;
+            color: var(--text);
+        }
+
+        .hero {
+            padding: 100px 20px 70px;
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            max-width: var(--maxw);
+            margin: 0 auto;
+            gap: 40px;
+        }
+
+        .hero img {
+            width: 100%;
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+        }
+
+        section {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            padding: 70px 20px;
+        }
+
+        .section-title {
+            font-size: clamp(24px, 4vw, 36px);
+            margin-bottom: 10px;
+        }
+
+        .section-sub {
+            color: var(--muted);
+            margin-bottom: 28px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 12px;
+        }
+
+        .g-item {
+            overflow: hidden;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, .08);
+            box-shadow: var(--shadow);
+        }
+
+        .g-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s;
+        }
+
+        .g-item:hover img {
+            transform: scale(1.06);
+        }
+
+        .span-6 {
+            grid-column: span 6;
+            aspect-ratio: 16/10;
+        }
+
+        .span-3 {
+            grid-column: span 3;
+            aspect-ratio: 1;
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .step {
+            position: relative;
+            padding: 18px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, .08);
+            background: var(--card);
+            box-shadow: var(--shadow);
+        }
+
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            top: -14px;
+            left: -14px;
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .usp {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .quote {
+            font-style: italic;
+            color: var(--muted);
+        }
+
+        .cta {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .contact {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        form {
+            display: grid;
+            gap: 12px;
+        }
+
+        .input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: #0d1016;
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--ring);
+        }
+
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, .08);
+            padding: 30px 20px;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media(max-width:1000px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .usp {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .testimonials {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media(max-width:720px) {
+            nav ul {
+                display: none;
+            }
+
+            .theme-toggle {
+                display: inline-flex;
+            }
+
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .contact {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+
+    <!-- Header -->
+    <header>
+        <nav class="nav">
+            <a href="#" class="brand"><img src="https://i.imgur.com/JwVmh8x.png" alt="Glavina logo">Glavina</a>
+            <ul>
+                <li><a href="#onama">O nama</a></li>
+                <li><a href="#services">Ponuda</a></li>
+                <li><a href="#gallery">Galerija</a></li>
+                <li><a href="#process">Proces</a></li>
+                <li><a href="#why">Zašto mi</a></li>
+                <li><a href="#testimonials">Testimonijali</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero reveal">
+        <div>
+            <h1>Namještaj po mjeri za svaki dom</h1>
+            <p>Glavina izrađuje kuhinje, ormari i druge komade namještaja prema vašim željama i prostoru.</p>
+            <a href="#contact" class="btn btn-primary">Zatraži ponudu</a>
+        </div>
+        <div><img src="https://i.imgur.com/wQf6MPl.jpg" alt="Namještaj po mjeri"></div>
+    </section>
+
+    <!-- O nama -->
+    <section id="onama" class="reveal">
+        <h2 class="section-title">O nama</h2>
+        <div class="card">
+            <p>Početak poduzeća datira od <strong>20. rujna 1993. godine</strong>.</p>
+            <p>Osnovna djelatnost poduzeća je maloprodaja i veleprodaja namještaja, te u novije vrijeme proizvodnja
+                istog.</p>
+            <p>Poduzeće posluje sa sjedištem u Knešpolju bb, Široki Brijeg.</p>
+            <h3>Kontakt informacije</h3>
+            <p><strong>Glavina d.o.o.</strong></p>
+            <p>Adresa: Knešpolje bb, 88220 Široki Brijeg</p>
+            <p>tel/fax: +387 39 701 150</p>
+            <p>e-mail: <a href="mailto:info@glavina.info">info@glavina.info</a></p>
+            <p>proizvodnja: <a href="mailto:proizvodnja@glavina.info">proizvodnja@glavina.info</a></p>
+            <p>narudžbe: <a href="mailto:narudzbe@glavina.info">narudzbe@glavina.info</a></p>
+            <p>web: <a href="https://www.glavina.info" target="_blank">www.glavina.info</a></p>
+        </div>
+    </section>
+
+    <!-- Ponuda / Services -->
+    <section id="services" class="reveal">
+        <h2 class="section-title">Naša ponuda</h2>
+        <p class="section-sub">Sve što možete zamisliti u svom domu, mi možemo izraditi.</p>
+        <div class="grid-3">
+            <div class="card reveal">
+                <div class="icon">🍽️</div>
+                <h3>Kuhinje</h3>
+                <p>Precizno izrađene kuhinje po mjeri, kombinacija dizajna i funkcionalnosti.</p>
+            </div>
+            <div class="card reveal">
+                <div class="icon">🛋️</div>
+                <h3>Ormari</h3>
+                <p>Ormani i garderobe po vašoj želji, maksimalna iskoristivost prostora.</p>
+            </div>
+            <div class="card reveal">
+                <div class="icon">🪑</div>
+                <h3>Stolovi i police</h3>
+                <p>Stolovi, police i drugi komadi namještaja s pažnjom na detalje.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galerija -->
+    <section id="gallery" class="reveal">
+        <h2 class="section-title">Galerija</h2>
+        <p class="section-sub">Pogledajte neke od naših realizacija.</p>
+        <div class="gallery">
+            <div class="g-item span-6 reveal"><img src="https://i.imgur.com/F0Vj1JZ.jpg" alt="Galerija 1"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/0XQzRzJ.jpg" alt="Galerija 2"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/IDV6w9E.jpg" alt="Galerija 3"></div>
+            <div class="g-item span-3 reveal"><img src="https://i.imgur.com/5f2Gc5V.jpg" alt="Galerija 4"></div>
+            <div class="g-item span-6 reveal"><img src="https://i.imgur.com/X7OjFZD.jpg" alt="Galerija 5"></div>
+        </div>
+    </section>
+
+    <!-- Proces -->
+    <section id="process" class="reveal">
+        <h2 class="section-title">Naš proces</h2>
+        <p class="section-sub">Jednostavno i transparentno, od ideje do gotovog proizvoda.</p>
+        <div class="timeline">
+            <div class="step reveal">
+                <h3>Konzultacija</h3>
+                <p>Razgovaramo o vašim željama i prostoru.</p>
+            </div>
+            <div class="step reveal">
+                <h3>Dizajn</h3>
+                <p>Pripremamo 3D prikaz i plan izrade.</p>
+            </div>
+            <div class="step reveal">
+                <h3>Izrada</h3>
+                <p>Namještaj se precizno izrađuje u našoj radionici.</p>
+            </div>
+            <div class="step reveal">
+                <h3>Ugradnja</h3>
+                <p>Montiramo namještaj kod vas i osiguravamo savršeni završetak.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zašto mi -->
+    <section id="why" class="reveal">
+        <h2 class="section-title">Zašto izabrati Glavinu?</h2>
+        <div class="usp">
+            <div class="card reveal">
+                <div class="icon">💎</div>
+                <h3>Kvaliteta</h3>
+                <p>Koristimo vrhunske materijale i preciznu izradu.</p>
+            </div>
+            <div class="card reveal">
+                <div class="icon">⚡</div>
+                <h3>Brzina</h3>
+                <p>Efikasna proizvodnja i montaža bez kompromisa na kvaliteti.</p>
+            </div>
+            <div class="card reveal">
+                <div class="icon">🎨</div>
+                <h3>Dizajn</h3>
+                <p>Namještaj po mjeri koji se savršeno uklapa u vaš prostor.</p>
+            </div>
+            <div class="card reveal">
+                <div class="icon">🤝</div>
+                <h3>Pouzdano</h3>
+                <p>Transparentan proces i zadovoljni klijenti.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonijali -->
+    <section id="testimonials" class="reveal">
+        <h2 class="section-title">Što kažu naši klijenti</h2>
+        <div class="testimonials">
+            <div class="card reveal">
+                <p class="quote">“Fantastična kuhinja! Sve po mjeri i savršeno izvedeno.”</p>
+                <p>— Ana M.</p>
+            </div>
+            <div class="card reveal">
+                <p class="quote">“Orman izgleda bolje nego što smo zamišljali. Preporuka!”</p>
+                <p>— Ivan P.</p>
+            </div>
+            <div class="card reveal">
+                <p class="quote">“Profesionalno i pouzdano, sve pohvale timu Glavina.”</p>
+                <p>— Marija K.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta reveal">
+        <div>
+            <h2 class="section-title">Spremni za svoj namještaj po mjeri?</h2>
+            <p>Kontaktirajte nas i zajedno kreirajmo vaš savršeni prostor.</p>
+            <a href="#contact" class="btn btn-primary">Pošaljite upit</a>
+        </div>
+        <div class="card">
+            <h3>Kontaktirajte nas odmah</h3>
+            <p>Telefon: +385 91 234 5678</p>
+            <p>Email: info@glavina.hr</p>
+        </div>
+    </section>
+
+    <!-- Kontakt -->
+    <section id="contact" class="contact reveal">
+        <div>
+            <h2 class="section-title">Kontakt</h2>
+            <p class="section-sub">Pošaljite nam poruku i odgovorit ćemo vam u najkraćem roku.</p>
+            <form>
+                <input class="input" type="text" placeholder="Ime i prezime" required>
+                <input class="input" type="email" placeholder="Email" required>
+                <textarea class="input" placeholder="Poruka" required></textarea>
+                <button type="submit" class="btn btn-primary">Pošalji</button>
+            </form>
+        </div>
+        <div>
+            <h3>Adresa</h3>
+            <p>Knešpolje bb, 88220 Široki Brijeg</p>
+            <h3>Telefon</h3>
+            <p>+387 39 701 150</p>
+            <h3>Email</h3>
+            <p>info@glavina.info</p>
+        </div>
+    </section>
+
+    <footer>&copy; 2025 Glavina. Sva prava pridržana.</footer>
+
+    <script>
+        // Reveal on scroll
+        const reveals = document.querySelectorAll(".reveal");
+        function reveal() {
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("visible");
+                } else {
+                    reveals[i].classList.remove("visible");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        // Light/Dark mode toggle
+        const themeToggle = document.getElementById("themeToggle");
+        themeToggle.addEventListener("click", () => {
+            const body = document.body;
+            if (body.getAttribute("data-theme") === "dark") {
+                body.setAttribute("data-theme", "light");
+                themeToggle.textContent = "🌞";
+            } else {
+                body.setAttribute("data-theme", "dark");
+                themeToggle.textContent = "🌙";
+            }
+        });
+    </script>
+</body>
+
+</html>
