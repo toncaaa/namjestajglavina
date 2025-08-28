@@ -23,7 +23,7 @@
 
         [data-theme="light"] {
             --bg: #fdfdfd;
-            --card: #ffffff;
+            --card: #fff;
             --text: #111;
             --muted: #555;
             --ring: rgba(216, 28, 28, 0.25);
@@ -33,6 +33,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -40,7 +41,7 @@
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
-            transition: 0.3s;
+            transition: .3s;
         }
 
         header {
@@ -48,7 +49,7 @@
             top: 0;
             z-index: 100;
             background: var(--bg);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .4);
         }
 
         .nav {
@@ -87,7 +88,7 @@
             text-decoration: none;
             color: var(--muted);
             font-weight: 500;
-            transition: 0.3s;
+            transition: .3s;
         }
 
         nav ul li a:hover {
@@ -98,7 +99,7 @@
             cursor: pointer;
             padding: 6px 10px;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, .2);
             background: none;
             color: var(--text);
             display: inline-flex;
@@ -112,19 +113,23 @@
             font-weight: 600;
             border-radius: 12px;
             text-decoration: none;
-            transition: 0.3s;
+            transition: .3s;
         }
 
         .btn-primary:hover {
             background: var(--accent2);
         }
 
-        .hero {
-            padding: 100px 20px 70px;
-            display: grid;
-            grid-template-columns: 1.1fr .9fr;
+        section {
             max-width: var(--maxw);
             margin: 0 auto;
+            padding: 70px 20px;
+            scroll-margin-top: 100px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
             gap: 40px;
             align-items: center;
         }
@@ -133,12 +138,6 @@
             width: 100%;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-        }
-
-        section {
-            max-width: var(--maxw);
-            margin: 0 auto;
-            padding: 70px 20px;
         }
 
         .section-title {
@@ -172,7 +171,7 @@
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 12px;
         }
 
@@ -181,7 +180,7 @@
             border-radius: 18px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: var(--shadow);
-            transition: transform 0.3s;
+            transition: transform .3s;
             cursor: pointer;
         }
 
@@ -189,102 +188,99 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.5s;
+            transition: .5s;
         }
 
         .g-item:hover img {
             transform: scale(1.06);
         }
 
-        .span-6 {
-            grid-column: span 6;
-            aspect-ratio: 16/10;
-        }
-
-        .span-3 {
-            grid-column: span 3;
-            aspect-ratio: 1;
-        }
-
-        .timeline {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-        }
-
-        .step {
-            position: relative;
-            padding: 18px;
-            border-radius: var(--radius);
-            border: 1px solid rgba(255, 255, 255, .08);
-            background: var(--card);
-            box-shadow: var(--shadow);
-        }
-
-        .step::before {
-            counter-increment: step;
-            content: counter(step);
-            position: absolute;
-            top: -14px;
-            left: -14px;
-            width: 36px;
-            height: 36px;
-            display: grid;
-            place-items: center;
-            border-radius: 12px;
-            background: var(--accent);
-            color: #fff;
-            font-weight: 800;
-        }
-
-        .usp {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-        }
-
-        .testimonials {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-
-        .quote {
-            font-style: italic;
-            color: var(--muted);
-        }
-
-        .cta {
-            display: grid;
-            grid-template-columns: 1.2fr .8fr;
-            gap: 24px;
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .9);
+            display: none;
             align-items: center;
+            justify-content: center;
+            z-index: 200;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 32px;
+            cursor: pointer;
+        }
+
+        .lightbox .prev,
+        .lightbox .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 48px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .lightbox .prev {
+            left: 20px;
+        }
+
+        .lightbox .next {
+            right: 20px;
         }
 
         .contact {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.2fr .8fr;
             gap: 24px;
+            align-items: start;
         }
 
-        form {
-            display: grid;
-            gap: 12px;
+        .contact .card {
+            padding: 30px;
+        }
+
+        .contact h3 {
+            margin-bottom: 12px;
+            color: var(--accent);
         }
 
         .input {
             width: 100%;
-            padding: 14px 16px;
+            padding: 16px 18px;
             border-radius: 14px;
             background: #0d1016;
             color: var(--text);
             border: 1px solid rgba(255, 255, 255, .1);
+            transition: .3s;
         }
 
         .input:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 4px var(--ring);
+        }
+
+        textarea.input {
+            resize: none;
+            min-height: 140px;
         }
 
         footer {
@@ -317,7 +313,7 @@
             height: 3px;
             background: var(--text);
             border-radius: 2px;
-            transition: 0.3s;
+            transition: .3s;
         }
 
         @media(max-width:720px) {
@@ -342,16 +338,8 @@
                 display: flex;
             }
 
-            .theme-toggle {
-                margin-left: 10px;
-            }
-
             .grid-3 {
                 grid-template-columns: 1fr;
-            }
-
-            .gallery {
-                grid-template-columns: repeat(6, 1fr);
             }
 
             .contact {
@@ -385,7 +373,7 @@
     </header>
 
     <!-- Hero -->
-    <section class="hero reveal visible">
+    <section class="hero reveal">
         <div>
             <h1>Namještaj po mjeri za svaki dom</h1>
             <p>Glavina izrađuje kuhinje, ormari i druge komade namještaja prema vašim željama i prostoru.</p>
@@ -395,10 +383,10 @@
     </section>
 
     <!-- O nama -->
-    <section id="onama" class="reveal visible">
+    <section id="onama" class="reveal">
         <h2 class="section-title">O nama</h2>
+        <p class="section-sub">Početak poduzeća datira od 20. rujna 1993. godine.</p>
         <div class="card">
-            <p>Početak poduzeća datira od <strong>20. rujna 1993. godine</strong>.</p>
             <p>Osnovna djelatnost poduzeća je maloprodaja i veleprodaja namještaja, te u novije vrijeme proizvodnja
                 istog.</p>
             <p>Poduzeće posluje sa sjedištem u Knešpolju bb, Široki Brijeg.</p>
@@ -406,7 +394,7 @@
     </section>
 
     <!-- Ponuda -->
-    <section id="services" class="reveal visible">
+    <section id="services" class="reveal">
         <h2 class="section-title">Naša ponuda</h2>
         <p class="section-sub">Sve što možete zamisliti u svom domu, mi možemo izraditi.</p>
         <div class="grid-3">
@@ -433,20 +421,20 @@
         <h2 class="section-title">Galerija</h2>
         <p class="section-sub">Pogledajte neke od naših realizacija.</p>
         <div class="gallery">
-            <div class="g-item span-6"><img src="https://imgur.com/6bHadVi.jpg" alt="Galerija 1"></div>
-            <div class="g-item span-3"><img src="https://imgur.com/j0VXOv8.jpg" alt="Galerija 2"></div>
-            <div class="g-item span-3"><img src="https://imgur.com/4FufoWD.jpg" alt="Galerija 3"></div>
-            <div class="g-item span-3"><img src="https://imgur.com/kEzqTbK.jpg" alt="Galerija 4"></div>
-            <div class="g-item span-6"><img src="https://imgur.com/py04aNp.jpg" alt="Galerija 5"></div>
-            <div class="g-item span-3"><img src="https://imgur.com/lpeUiSf.jpg" alt="Galerija 6"></div>
-            <div class="g-item span-3"><img src="https://imgur.com/po9HGo7.jpg" alt="Galerija 7"></div>
-            <div class="g-item span-6"><img src="https://imgur.com/VpUPwye.jpg" alt="Galerija 8"></div>
-            <div class="g-item span-3"><img src="https://imgur.com/1nRPv79.jpg" alt="Galerija 9"></div>
-            <div class="g-item span-3"><img src="https://imgur.com/2ABkAMM.jpg" alt="Galerija 10"></div>
-            <div class="g-item span-6"><img src="https://imgur.com/amvpQsX.jpg" alt="Galerija 11"></div>
-            <div class="g-item span-3"><img src="https://imgur.com/WW0ZpuB.jpg" alt="Galerija 12"></div>
-            <div class="g-item span-3"><img src="https://imgur.com/wyTZ6yE.jpg" alt="Galerija 13"></div>
-            <div class="g-item span-6"><img src="https://imgur.com/JAfhQfb.jpg" alt="Galerija 14"></div>
+            <div class="g-item reveal"><img src="https://imgur.com/6bHadVi.jpg" alt=""></div>
+            <div class="g-item reveal"><img src="https://imgur.com/j0VXOv8.jpg" alt=""></div>
+            <div class="g-item reveal"><img src="https://imgur.com/4FufoWD.jpg" alt=""></div>
+            <div class="g-item reveal"><img src="https://imgur.com/kEzqTbK.jpg" alt=""></div>
+            <div class="g-item reveal"><img src="https://imgur.com/py04aNp.jpg" alt=""></div>
+            <div class="g-item reveal"><img src="https://imgur.com/lpeUiSf.jpg" alt=""></div>
+            <div class="g-item reveal"><img src="https://imgur.com/po9HGo7.jpg" alt=""></div>
+            <div class="g-item reveal"><img src="https://imgur.com/VpUPwye.jpg" alt=""></div>
+            <div class="g-item reveal"><img src="https://imgur.com/1nRPv79.jpg" alt=""></div>
+            <div class="g-item reveal"><img src="https://imgur.com/2ABkAMM.jpg" alt=""></div>
+            <div class="g-item reveal"><img src="https://imgur.com/amvpQsX.jpg" alt=""></div>
+            <div class="g-item reveal"><img src="https://imgur.com/WW0ZpuB.jpg" alt=""></div>
+            <div class="g-item reveal"><img src="https://imgur.com/wyTZ6yE.jpg" alt=""></div>
+            <div class="g-item reveal"><img src="https://imgur.com/JAfhQfb.jpg" alt=""></div>
         </div>
     </section>
 
@@ -454,20 +442,20 @@
     <section id="process" class="reveal">
         <h2 class="section-title">Naš proces</h2>
         <p class="section-sub">Jednostavno i transparentno, od ideje do gotovog proizvoda.</p>
-        <div class="timeline">
-            <div class="step reveal">
+        <div class="grid-3">
+            <div class="card reveal">
                 <h3>Konzultacija</h3>
                 <p>Razgovaramo o vašim željama i prostoru.</p>
             </div>
-            <div class="step reveal">
+            <div class="card reveal">
                 <h3>Dizajn</h3>
                 <p>Pripremamo 3D prikaz i plan izrade.</p>
             </div>
-            <div class="step reveal">
+            <div class="card reveal">
                 <h3>Izrada</h3>
                 <p>Namještaj se precizno izrađuje u našoj radionici.</p>
             </div>
-            <div class="step reveal">
+            <div class="card reveal">
                 <h3>Ugradnja</h3>
                 <p>Montiramo namještaj kod vas i osiguravamo savršeni završetak.</p>
             </div>
@@ -477,7 +465,7 @@
     <!-- Zašto mi -->
     <section id="why" class="reveal">
         <h2 class="section-title">Zašto izabrati Glavinu?</h2>
-        <div class="usp">
+        <div class="grid-3">
             <div class="card reveal">
                 <div class="icon">💎</div>
                 <h3>Kvaliteta</h3>
@@ -504,33 +492,19 @@
     <!-- Testimonijali -->
     <section id="testimonials" class="reveal">
         <h2 class="section-title">Što kažu naši klijenti</h2>
-        <div class="testimonials">
+        <div class="grid-3">
             <div class="card reveal">
-                <p class="quote">“Fantastična kuhinja! Sve po mjeri i savršeno izvedeno.”</p>
+                <p>“Fantastična kuhinja! Sve po mjeri i savršeno izvedeno.”</p>
                 <p>— Ana M.</p>
             </div>
             <div class="card reveal">
-                <p class="quote">“Orman izgleda bolje nego što smo zamišljali. Preporuka!”</p>
+                <p>“Orman izgleda bolje nego što smo zamišljali. Preporuka!”</p>
                 <p>— Ivan P.</p>
             </div>
             <div class="card reveal">
-                <p class="quote">“Profesionalno i pouzdano, sve pohvale timu Glavina.”</p>
+                <p>“Profesionalno i pouzdano, sve pohvale timu Glavina.”</p>
                 <p>— Marija K.</p>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta reveal">
-        <div>
-            <h2 class="section-title">Spremni za svoj namještaj po mjeri?</h2>
-            <p>Kontaktirajte nas i zajedno kreirajmo vaš savršeni prostor.</p>
-            <a href="#contact" class="btn-primary">Pošaljite upit</a>
-        </div>
-        <div class="card">
-            <h3>Kontaktirajte nas odmah</h3>
-            <p>Telefon: +385 91 234 5678</p>
-            <p>Email: info@glavina.hr</p>
         </div>
     </section>
 
@@ -546,7 +520,7 @@
                 <button type="submit" class="btn-primary">Pošalji</button>
             </form>
         </div>
-        <div>
+        <div class="card">
             <h3>Adresa</h3>
             <p>Knešpolje bb, 88220 Široki Brijeg</p>
             <h3>Telefon</h3>
@@ -558,21 +532,26 @@
 
     <footer>&copy; 2025 Glavina. Sva prava pridržana.</footer>
 
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="close">&times;</span>
+        <span class="prev">&#10094;</span>
+        <img src="">
+        <span class="next">&#10095;</span>
+    </div>
+
     <script>
-        // Reveal on scroll
+        // Reveal on scroll + inicijalno učitavanje
         const reveals = document.querySelectorAll(".reveal");
-        window.addEventListener("scroll", () => {
+        const revealElements = () => {
             reveals.forEach(el => {
                 const top = el.getBoundingClientRect().top;
                 if (top < window.innerHeight - 100) el.classList.add("visible");
                 else el.classList.remove("visible");
             });
-        });
-
-        // Immediately show hero and above sections
-        window.addEventListener("load", () => {
-            document.querySelectorAll(".hero, #onama, #services").forEach(el => el.classList.add("visible"));
-        });
+        };
+        window.addEventListener("scroll", revealElements);
+        window.addEventListener("load", revealElements); // <-- odmah na učitavanje stranice
 
         // Dark/Light toggle
         const themeToggle = document.getElementById("themeToggle");
@@ -585,9 +564,25 @@
         // Hamburger toggle
         const hamburger = document.getElementById("hamburger");
         const menu = document.getElementById("menu");
-        hamburger.addEventListener("click", () => {
-            menu.classList.toggle("show");
+        hamburger.addEventListener("click", () => { menu.classList.toggle("show"); });
+
+        // Lightbox
+        const galleryItems = document.querySelectorAll(".g-item img");
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = lightbox.querySelector("img");
+        const closeBtn = lightbox.querySelector(".close");
+        const prevBtn = lightbox.querySelector(".prev");
+        const nextBtn = lightbox.querySelector(".next");
+        let currentIndex = 0;
+        galleryItems.forEach((img, index) => {
+            img.addEventListener("click", () => {
+                currentIndex = index; lightbox.classList.add("active"); lightboxImg.src = img.src;
+            });
         });
+        closeBtn.addEventListener("click", () => { lightbox.classList.remove("active"); });
+        prevBtn.addEventListener("click", () => { currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length; lightboxImg.src = galleryItems[currentIndex].src; });
+        nextBtn.addEventListener("click", () => { currentIndex = (currentIndex + 1) % galleryItems.length; lightboxImg.src = galleryItems[currentIndex].src; });
+        window.addEventListener("click", (e) => { if (e.target === lightbox) lightbox.classList.remove("active"); });
     </script>
 
 </body>
